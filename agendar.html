@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendar {{ servico.nome }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Agendar: {{ servico.nome }}</h1>
+        <p>Duração estimada: {{ servico.duracao_minutos }} minutos</p>
+
+        {% if error %}
+            <p class="error-message">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST">
+            <label for="nome_cliente">Seu Nome:</label>
+            <input type="text" id="nome_cliente" name="nome_cliente" required>
+
+            <label for="telefone_cliente">Seu Telefone (opcional):</label>
+            <input type="text" id="telefone_cliente" name="telefone_cliente">
+
+            <label for="data">Data:</label>
+            <input type="date" id="data" name="data" required min="{{ today_date }}">
+
+            <label for="hora">Hora:</label>
+            <input type="time" id="hora" name="hora" required>
+
+            <button type="submit" class="button">Confirmar Agendamento</button>
+        </form>
+        <p><a href="{{ url_for('index') }}">Voltar para Serviços</a></p>
+    </div>
+
+    <script>
+        // Define a data mínima para o input de data (hoje)
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0'); // Mês é 0-indexado
+            const dd = String(today.getDate()).padStart(2, '0');
+            document.getElementById('data').min = `${yyyy}-${mm}-${dd}`;
+        });
+    </script>
+</body>
+</html>

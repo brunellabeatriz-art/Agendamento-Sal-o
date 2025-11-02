@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamento Online - Serviços</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Nossos Serviços</h1>
+        <div class="service-list">
+            {% for servico in servicos %}
+            <div class="service-card">
+                <h2>{{ servico.nome }}</h2>
+                <p>Duração: {{ servico.duracao_minutos }} minutos</p>
+                <a href="{{ url_for('agendar.html', servico_id=servico.id) }}" class="button">Agendar</a>
+            </div>
+            {% endfor %}
+        </div>
+        <p><a href="profissional.html">Acesso do Profissional</a></p>
+    </div>
+</body>
+</html>

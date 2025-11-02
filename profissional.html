@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamentos do Profissional</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Seus Agendamentos</h1>
+
+        {% if agendamentos_por_data %}
+            {% for data_str in datas_ordenadas %}
+                <h2>Agendamentos para {{ data_str }}</h2>
+                <ul class="appointment-list">
+                    {% for agendamento in agendamentos_por_data[data_str] %}
+                        <li>
+                            <strong>{{ agendamento.hora }}</strong> - {{ agendamento.nome_servico }} ({{ agendamento.duracao_minutos }} min)
+                            <br>Cliente: {{ agendamento.nome_cliente }}
+                            {% if agendamento.telefone_cliente %}(Tel: {{ agendamento.telefone_cliente }}){% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        {% else %}
+            <p>Nenhum agendamento encontrado.</p>
+        {% endif %}
+
+        <p><a href="{{ url_for('index') }}">Voltar para Serviços</a></p>
+    </div>
+</body>
+</html>
